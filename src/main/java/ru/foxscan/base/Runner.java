@@ -2,8 +2,6 @@ package ru.foxscan.base;
 
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 
 
@@ -16,6 +14,8 @@ public class Runner implements Runnable {
         Response response = checkBaseGetTest();
         System.out.println(response.statusCode());
         System.out.println(response.getTime());
+        DBUtils.openConnection();
+        DBUtils.writeResponseResult("getHoldings", "EPK", response.statusCode(), (int) response.getTime());
         }
 
     public Response checkBaseGetTest() {
