@@ -166,7 +166,7 @@ public class StandStatusUtils {
             if(resultSet.getString("status").equals("Error")){
                 status = "N";
             }
-            result.append(startDateTimeFormat).append(" - ").append(status).append(" - ").append(endDateTimeFormat).append(" - null").append("!");
+            result.append(endDateTimeFormat).append(" - ").append(status).append(" - ").append(startDateTimeFormat).append(" - null").append("!");
 
         }
         connection.close();
