@@ -5,6 +5,8 @@ import io.restassured.config.EncoderConfig;
 import io.restassured.response.Response;
 
 
+import java.sql.SQLException;
+
 import static io.restassured.RestAssured.given;
 
 public class Runner implements Runnable {
@@ -12,11 +14,13 @@ public class Runner implements Runnable {
     @Override
     public void run() {
         Response response = checkBaseGetTest();
-        System.out.println(response.statusCode());
-        System.out.println(response.getTime());
         DBUtils.openConnection();
-        DBUtils.writeResponseResult("getHoldings", "EPK", response.statusCode(), (int) response.getTime());
+        try {
+            DBUtils.writeResponseResult("getHoldings", "EPK", "true", response.statusCode(), (int) response.getTime());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
 
     public Response checkBaseGetTest() {
 

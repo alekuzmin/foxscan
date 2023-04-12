@@ -1,5 +1,6 @@
 package ru.foxscan.servlet;
 
+import ru.foxscan.work.StandStatusUtils;
 import ru.foxscan.work.Worker;
 
 import javax.servlet.ServletException;
@@ -16,14 +17,25 @@ public class BaseServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String result;
+//        String result;
+//        try {
+//            result = Worker.getTimeTable("EPK");
+//        } catch (SQLException | ParseException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+        String statDataAll = "[]";
         try {
-            result = Worker.getTimeTable("EPK");
-        } catch (SQLException | ParseException e) {
+            statDataAll = StandStatusUtils.getStatDataAll("EPK");
+        } catch (ParseException | SQLException | ClassNotFoundException e) {
+            System.out.println(e);
             throw new RuntimeException(e);
         }
+        System.out.println(statDataAll);
+            request.setAttribute("statDataAll", statDataAll);
 
-        request.setAttribute("result", result);
+
         request
                 .getRequestDispatcher("/WEB-INF/views/mon.jsp")
                 .forward(request, response);

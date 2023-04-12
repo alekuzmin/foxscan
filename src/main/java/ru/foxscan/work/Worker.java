@@ -24,8 +24,8 @@ public class Worker extends DBUtils{
         result.append("<tr>");
         openConnection();
         for(int i = 0; i < 1440; i = i+5) {
-            Date from = new Date(millis + Long.valueOf(i*1000*60));
-            Date to = new Date(millis + Long.valueOf((i + 5)*1000*60));
+            Date from = new Date(millis + (long) i * 1000 * 60);
+            Date to = new Date(millis + (long) (i + 5) * 1000 * 60);
             String sql = "SELECT status_code FROM mon WHERE master_system = '" + masterSystem + "' AND moment BETWEEN strftime('%Y-%m-%d %H:%M:%S','" + sdfFull.format(from) + "') AND strftime('%Y-%m-%d %H:%M:%S','" + sdfFull.format(to) + "') LIMIT 1;";
             resultSet = statement.executeQuery(sql);
             if (!resultSet.next()) {
