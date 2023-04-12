@@ -1,6 +1,74 @@
-29/10 07:39:50 - N - 29/10 07:17:50 - null
-29/10 13:56:42 - Y - 29/10 07:39:50 - null
-29/10 14:00:22 - N - 29/10 13:56:42 - null
-29/10 17:15:04 - Y - 29/10 14:00:22 - null
-29/10 17:18:33 - N - 29/10 17:15:04 - null
-29/10 18:11:47 - Y - 29/10 17:18:33 - null
+svg {
+                                               pointer-events: none;
+                                               position: absolute;
+                                               width: 1500px;
+                                               height: 700px;
+                                               left: 50px;
+                               }
+                               line {
+                                               stroke: black;
+                                               stroke-width: 1px;
+                                               opacity: 0.1;
+                               }
+                               .axis {
+                                               font-family: sans-serif;
+                                               stroke: red;
+                                               opacity:1;
+                               }
+                               .axis-textX {
+                                               font-size: 10px;
+                               }
+                               .axis-textY {
+                                               font-size: 16px;
+                               }
+                               .tech {
+                                               fill: green;
+                                               opacity:0.2;
+                               }
+                               .tech_l {
+                                               fill: green;
+                                               stroke: black;
+                                               stroke-width:1px;
+                                               fill-opacity:0.2;
+                                               stroke-opacity:0.5;
+                               }
+                               .standIn_l {
+                                               fill: red;
+                                               stroke: black;
+                                               stroke-width: 1px;
+                                               stroke-opacity: 0.5;
+                                               fill-opacity:0.6;
+                               }
+                               .disconnect_l {
+                                               fill: yellow;
+                                               stroke: black;
+                                               stroke-width: 1px;
+                                               stroke-opacity: 0.5;
+                               }
+                               .standIn {
+                                               fill: red;
+                                               fill-opacity:0.6;
+                                               pointer-events: visible;
+                               }
+                               .standIn:hover {
+                                               fill-opacity: 1;
+                               }
+                               .standIn:hover + .label{
+                                               opacity:1;
+                               }
+                               .disconnect {
+                                               fill: yellow;
+                                               fill-opacity:0.6;
+                                               pointer-events: visible;
+                               }
+                               .disconnect:hover {
+                                               fill-opacity: 1;
+                               }
+                               .disconnect:hover + .label{
+                                               opacity:1;
+                               }
+                               .label{
+                                               opacity:0;
+                                               font-size: 12px;
+                                               font-family: sans-serif;
+                               }
