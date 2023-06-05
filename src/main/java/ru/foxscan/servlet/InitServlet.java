@@ -12,7 +12,7 @@ public class InitServlet implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent e) {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleWithFixedDelay(new Runner(), 0, 1, TimeUnit.MINUTES);
+        service.scheduleWithFixedDelay(new Runner(), 0, 5, TimeUnit.MINUTES);
     }
 
 }

@@ -3,7 +3,7 @@ svg {
     position: absolute;
     width: 1500px;
     height: 700px;
-    left: 50px;
+    left: -110px;
 }
 line {
     stroke: black;
@@ -65,6 +65,17 @@ line {
     fill-opacity: 1;
 }
 .disconnect:hover + .label{
+    opacity:1;
+}
+.normal {
+    fill: forestgreen;
+    fill-opacity:0.6;
+    pointer-events: visible;
+}
+.normal:hover {
+    fill-opacity: 1;
+}
+.normal:hover + .label{
     opacity:1;
 }
 .label{

@@ -5,14 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DBUtils implements AutoCloseable{
-    private static final String urlDb = "jdbc:sqlite:C:/Users/ALEX/IdeaProjects/foxscan/src/main/resources/monDB.db";
+    private static final String urlDb = "jdbc:sqlite:/Users/16701823/IdeaProjects/foxscan/src/main/resources/monDB.db";
     private static final String className = "org.sqlite.JDBC";
     public static Connection connection;
     public static Statement statement;
     public static ResultSet resultSet;
 
 
-    public static void writeResponseResult(String serviceName, String masterSystem, String success, int statusCode, int leadTime) throws SQLException {
+    public static void writeResponseResult(String serviceName, String masterSystem, String success, int statusCode, int leadTime) {
 
         String status = "Normal";
 
@@ -23,7 +23,11 @@ public class DBUtils implements AutoCloseable{
             status = "Disconnect";
         }
 
-        writeStatusLog(masterSystem, status);
+        try {
+            writeStatusLog(masterSystem, status);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         String sql_mon = "INSERT INTO mon (service_name, master_system, success, status_code, lead_time) VALUES " +
                 "('" + serviceName + "', '" + masterSystem + "', '" + success + "', " + statusCode + ", " + leadTime + ");";

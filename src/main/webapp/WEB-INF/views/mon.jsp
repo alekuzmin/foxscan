@@ -6,6 +6,13 @@
 
 </head>
 <body>
+<a href="${pageContext.request.contextPath}/mon?master=auth">AUTH</a>
+<a href="${pageContext.request.contextPath}/mon?master=EPK">ЕПК</a>
+<a href="${pageContext.request.contextPath}/mon?master=EPC">ППРБ.ПС</a>
+<a href="${pageContext.request.contextPath}/mon?master=PPRB.CS">ППРБ.КС</a>
+<div>
+    <h2>${master}</h2>
+</div>
 </body>
 <script type="text/javascript">
 
@@ -76,11 +83,11 @@
             }
         }
         formLegendBox('tech_l', difX+20, difY-50);
-        formLegendText(' - тех окно полигона КИТ', difX+40, difY-40);
+        formLegendText(' - тех окно полигона ИФТ', difX+40, difY-40);
         formLegendBox('standIn_l', difX+200, difY-50);
-        formLegendText(' - режим standIn', difX+220, difY-40);
-        formLegendBox('disconnect_l', difX+320, difY-50);
-        formLegendText(' - disconnect', difX+340, difY-40);
+        formLegendText(' - недоступность модуля', difX+220, difY-40);
+        formLegendBox('disconnect_l', difX+380, difY-50);
+        formLegendText(' - недоступность мастер-системы', difX+400, difY-40);
 
         svg.appendChild(axisX);
         svg.appendChild(axisY);

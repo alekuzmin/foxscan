@@ -1,18 +1,19 @@
 package ru.foxscan.work;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
 public class StandStatusUtils {
 
-    private static final String urlDb = "jdbc:sqlite:C:/Users/ALEX/IdeaProjects/foxscan/src/main/resources/monDB.db";
+    private static final String urlDb = "jdbc:sqlite:/Users/16701823/IdeaProjects/foxscan/src/main/resources/monDB.db";
     private static final String className = "org.sqlite.JDBC";
 
 
@@ -66,6 +67,7 @@ public class StandStatusUtils {
         StringBuilder sb = new StringBuilder();
         StringBuilder standInData = new StringBuilder();
         StringBuilder disconnectData = new StringBuilder();
+        StringBuilder normalData = new StringBuilder();
         for (int z = 0; z < lines.length; z++) {
             String[] line = lines[z].split(" - ");
             if (line[0].substring(0, 5).equals(day) && line[1].equals("N")) {
@@ -79,6 +81,12 @@ public class StandStatusUtils {
                 disconnectData.append(getDecimalTime(line[2]) + "," + getDecimalTime(line[0]));
                 disconnectData.append(",'");
                 disconnectData.append(line[2].substring(6, 11) + " - " + line[0].substring(6, 11) + "'],");
+            }
+            if (line[0].substring(0, 5).equals(day) && line[1].equals("Y")) {
+                normalData.append("[");
+                normalData.append(getDecimalTime(line[2]) + "," + getDecimalTime(line[0]));
+                normalData.append(",'");
+                normalData.append(line[2].substring(6, 11) + " - " + line[0].substring(6, 11) + "'],");
             }
         }
 
@@ -100,6 +108,15 @@ public class StandStatusUtils {
             sb.append("'disconnect'");
             sb.append(");\n");
         }
+        if (!normalData.toString().equals("")) {
+            sb.append("formStatusRect([");
+            sb.append(normalData);
+            sb.append("],");
+            sb.append(i);
+            sb.append(",");
+            sb.append("'normal'");
+            sb.append(");\n");
+        }
 
         return sb.toString();
     }
@@ -111,38 +128,6 @@ public class StandStatusUtils {
         return Objects.toString(h + l, null);
     }
 
-
-    //for ex: date = 01/11 19:10:01
-    public static long getMilisByDate(String date) throws ParseException {
-
-        Date sdf2 = new SimpleDateFormat("HH:mm:ss").parse(date.substring(6, 14));
-        long milis = sdf2.getTime();
-        return milis;
-    }
-
-
-    public static String getStatusName(String statusCode) {
-
-        if (statusCode.equals("N")) {
-            return "STANDIN";
-        }
-        if (statusCode.equals("Z")) {
-            return "DISCONNECT";
-        } else {
-            return "";
-        }
-    }
-
-
-    public static String[] getLogData() throws IOException {
-
-        FileInputStream fis = new FileInputStream(new File("STAND_STATUS_STAT_LOG_URL"));
-        byte[] content = new byte[fis.available()];
-        fis.read(content);
-        fis.close();
-        String[] lines = new String(content, "Cp1251").split("\n");
-        return lines;
-    }
 
     //29/10 18:11:47 - Y - 29/10 17:18:33
     public static String[] getStatusLogData(String masterSystem) throws ClassNotFoundException, SQLException {
@@ -167,7 +152,6 @@ public class StandStatusUtils {
                 status = "N";
             }
             result.append(endDateTimeFormat).append(" - ").append(status).append(" - ").append(startDateTimeFormat).append(" - null").append("!");
-
         }
         connection.close();
         statement.close();
